@@ -1,0 +1,326 @@
+---
+title: "Introduction to R"
+author: "cjfiscus"
+date: "2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The R programming language is widely used for statistical computing in the biological sciences and beyond. This tutorial will highlight some of the capabilities of R and provide a rudimentary introduction to computer programming.  
+
+For the remainder of this tutorial, the text with a grey background is R code and the text that is prefaced with "##" is the output of the previous code statement. 
+
+## Installation
+
+To work through this tutorial, you must first have access to an R computing environment. 
+
+Method 1: Use [RStudio in the Cloud](https://rstudio.cloud)  
+Make an account and setup a new project. 
+
+Method 2: Download and install R for your platform of choice [here](https://cloud.r-project.org/).  
+
+RStudio is an integrated development environment (IDE) for R and is highly recommended for new users. Download and install RStudio for your platform of choice [here](https://www.rstudio.com/products/rstudio/download/).  
+
+To follow along with this tutorial, first open RStudio. Type the code into the Console at the bottom of the screen and press Enter after each line. 
+
+## Code and Comments
+
+When you write code, it is useful to label pieces of code with human readable text that describes what is happening. This can be done using comments. Comments are specified using "#" at the beginning of the line and are ignored by the interpreter (i.e the code on those lines, if any, is not executed). 
+
+```{r comments}
+# this is a comment
+```
+
+
+## Numbers, Variables, and Vectors
+
+R can understand simple arthimetic operations (e.g. +, -, *, / ). 
+
+```{r calculator}
+# addition
+5 + 4
+
+# subtraction
+5 - 4
+
+# multiplication
+5 * 4
+
+# division
+5 / 4
+```
+However, simply doing arithmetic only has limited utility. It is more useful to be able to capture the output of an operation so that we can use it later. This is done using variables. We can assign the output of an operation to a variable using the assignment operator "<-" or "=". We can then use the variable as if it was a number. Finally, we can view the value of variable by typing the variable name. 
+
+```{r vars1}
+a <- 5 + 4
+a
+
+a * 2
+
+```
+
+Variables can hold any type of information, not just numbers. For instance, we can assign a string (a bit of text) to a variable.
+
+```{r var2}
+a = "hello"
+a
+```
+
+Vectors are a collection of pieces of data. Vectors are specified with the syntax c("thing1", "thing2", etc.). R is particularly useful for statistics since it supports vector-based operations. This means that we can rapidly manipulate all of the values in a vector in the same way without the trouble of having to loop through each item in the vector as in other programming languages. 
+
+```{r vec}
+a<-c(5, 10, 15, 20)
+a
+a/5
+```
+
+Data in a vector can be accessed using indexes. In R, the first item in a vector is index 1. Prefacing an index with "-" means to exclude this value. We can also subset a vector using indexes.    
+```{r vec2}
+# define vector a
+a<-c(5, 10, 15, 20)
+
+# first item in a
+a[1]
+
+# a without the value at index 2
+a[-2]
+
+# subset 
+a[2:3]
+```
+
+## Conditional Statements 
+Conditionals are one of the most basic control flow statements used in computer programming and are used to execute a routine given a test of a condition. The most common conditional statement is the "if" statement. Here is how conditional statements are used in computer programming:     
+
+*if* a condition is true    
+  do this
+  
+Conditional statements can also have alternate instructions to perform if a statement is not true. 
+
+*if* a condition is true  
+  do this  
+*else*  
+  do this instead  
+  
+The syntax for conditional statements in R is as follows: 
+
+```{r conditional}
+# set x equal to 1
+x <- 1
+
+# if x is greater than 0 print x is greater than 0 
+if(x > 0){
+print("x is greater than 0")
+}
+
+# reassign x to -1
+x <- -1
+
+# if x is greater than 0, print x is greater than 0 
+# if x is not greater than 0, print x is less than 0 
+if(x > 0){
+  print("x is greater than 0")
+} else {
+  print("x is less than 0")
+}
+
+```
+## Loops 
+Loops are another type of control statement that are used when code is to be reused multiple times or when you want to iterate over a set of numbers or things. Imagine that you wanted to print all the numbers from 1 to 3.  
+
+This could be done like this:
+```{r loop1}
+print(1)
+print(2)
+print(3)
+```
+
+Imagine if instead I wanted to print all of the numbers from 1 to 1 million. Written this way, this would take 1 million lines of code! 
+
+It is much more efficient to do this using a loop. In this case we are using a *for* loop to iterate over the numbers 1 to 3.   
+```{r loop2}
+# for i (a number) in 1 through 3, print i
+for (i in 1:3){
+  print(i)
+}
+
+# we can also iterate over vectors
+# In this example length(vec) is 3 so 
+# this is the same as saying for 1:3
+
+# define vec with three things
+vec<-c("thing1", "thing2", "thing3")
+
+# showing that length(vec) is 3
+length(vec)
+
+# loop over vector and print each item 
+for (i in 1:length(vec)){
+  # print the item at index i in vec
+  print(vec[i])
+}
+
+```
+
+## Functions 
+Functions are pieces of reusable code that perform a task. You can think of functions as factories. Factories take raw materials, process them, and export finished products. Similarily, functions take raw data, do operations on the data, and then export the result of the operations.   
+
+Functions are specified with the syntax "functionName()" where arguments (the inputs) can be supplied to the function within the parentheses. In the last code chunk, we are using the combine function c(). This function combines all of the arguments into a single vector. The arguments provided to the function are the things that are to be combined.   
+
+You can view the help page for any function using the syntax "?functionName". Help pages describe how functions operate and what arguments they can take. As you might have noticed from the previous code chunk, you can also assign the output of a function to a variable.  
+
+```{r funct}
+# combine these numbers into a vector
+c(5,10,15,20)
+
+# functions can be given as the argument into another function
+# the vector created by c() is being used as an argument provided
+# to the sum function
+sum(c(5,10,15,20))
+
+# view the help page for the c() function
+?c
+```
+
+You can also write custom functions.   
+The syntax is: 
+
+"mySuperCoolFunction<-function(arguments){  
+code goes here  
+}"  
+
+```{r custom_funct}
+# define a vector
+v<-c(1, 2, 3, 4)
+
+# define a function to add 1
+addOne<-function(vector){
+  # add one to each value in vector
+  vector<-vector + 1
+  # return the value of vector from the function
+  return(vector)
+}
+
+# run the function, providing the vector as an argument
+addOne(v)
+```
+
+## Basic Statistics in R
+R has some built-in functions for basic descriptive statistics. Here are some examples:  
+```{r stat}
+numbers<-c(3,6,9,12,15,18)
+
+# mean
+mean(numbers)
+
+# median
+median(numbers)
+
+# standard deviation
+sd(numbers)
+
+# variance 
+var(numbers)
+```
+
+R can also do some more advanced things too. Here we are calculating the correlation and building a linear model using two variables from the built-in iris dataset.  
+```{r stat2}
+# load iris dataset
+data(iris)
+
+# is there a correlation between Sepal Length and Sepal Width? 
+# "$" is used to subset columns in the dataset (more on this shortly)
+cor(iris$Sepal.Length, iris$Sepal.Width)
+
+# build a linear model 
+model<-lm(Sepal.Length ~ Sepal.Width, data=iris)
+print(model)
+
+# quick plot of model 
+plot(Sepal.Length ~ Sepal.Width, data=iris)
+abline(lm(Sepal.Length ~ Sepal.Width, data=iris))
+```
+
+## Data Frames 
+Data frames are R objects that store data in a table format. Data frames consist of rows (horizontal) and columns (vertical). R provides many functions to interact with data frames.  
+Here are some examples: 
+
+```{r df}
+# assign iris to df
+df<-as.data.frame(iris)
+
+# determine the dimensions of a data frame (rows, columns)
+dim(df)
+
+# what are the names of the columns in df
+colnames(df)
+```
+
+Similarly to vectors, data frames can be subsetted. The syntax is "df[rows,columns]". If the rows or columns are not specified then R assumes that you mean all rows or columns  
+
+```{r df2}
+df<-as.data.frame(iris)
+
+# the entire dataset
+# df[,] or "df"
+
+# subset the first two rows
+df[1:2,]
+
+# subset the first two columns
+df[,1:2]
+
+# subset the first two rows and first two columns
+df[1:2,1:2]
+
+# subset the first and third column (use concatonate function) and only the first five rows
+df[1:5,c(1,3)]
+```
+
+Columns can also be selected by name using "df$colname." Among other uses, this is a quick way to calculate summary statistics about a column. 
+
+```{r df3}
+df<-as.data.frame(iris)
+
+mean(df$Petal.Length)
+```
+
+## Working with External Data
+### Working Directories
+When running code, the working directory is the directory (or folder) where the code is being executed. This is the default location that data will be read and written to disk. 
+```{r wd}
+# check the working directory
+getwd()
+
+# set the working directory to the Desktop
+# Note: this was done on MacOS, will be different for Windows
+setwd("~/Desktop")
+```
+
+### Reading and Writing Data
+Data can be read and written to disk from R. The basic function to read data into R is "read.table". Similarly, the function to write data is "write.table". 
+```{r rwdata, eval=F}
+# read data in
+df<-read.table("reallycooldata.txt")
+
+# write data out
+write.table(df, "reallycooldata.txt")
+```
+
+## Packages
+
+One of the most useful facets of the R programming environment is the ability to extend the functionality of the language using packages. Packages are collections of code and/or data that are written and submitted by users to repositories, or databases of packages. To date, there are over 10,000 packages that are available to download from the Comprehensive R Archive Network (CRAN). To use a package, you must first download and install it. Once it is installed, the package must be loaded before use. Note, "supercoolpkg" is merely a placeholder and not the valid name of an R package so the code below will fail if you try to run it.  
+
+```{r pkgs, eval=F}
+# install package
+install.packages("supercoolpkg")
+
+# load package 
+library("supercoolpkg")
+```
+
